@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { CartProvider } from "@/components/CartContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "STOCKGUARD // Precision Hardware & ACID Inventory Engine",
+  title: "StockGuard — Equipamiento de estudio e inventario transaccional",
   description:
-    "E-Commerce Full-Stack con reservas de stock con TTL, SELECT FOR UPDATE en PostgreSQL, Kardex inmutable (Inventory Ledger), máquina de estados de pedidos y RBAC.",
+    "Comercio electrónico con reservas de inventario de 15 minutos, bloqueo transaccional en PostgreSQL, Kardex contable y gestión de estados de pedidos.",
 };
 
 export default function RootLayout({
@@ -13,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className="dark">
+    <html lang="es">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -22,14 +23,12 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-[#090B10] text-[#F3F5F8] antialiased selection:bg-[#F59E0B] selection:text-[#090B10]">
-        <div className="fixed inset-0 pointer-events-none z-0 bg-grid-pattern opacity-35" />
-        <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[900px] h-[360px] bg-amber-500/8 blur-[140px] pointer-events-none z-0 rounded-full" />
-        <div className="relative z-10">{children}</div>
+      <body className="min-h-screen bg-[#F7F7F5] text-[#141517] antialiased selection:bg-[#1D4ED8] selection:text-white">
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );

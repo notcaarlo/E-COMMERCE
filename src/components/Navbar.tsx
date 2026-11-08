@@ -3,26 +3,22 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  Cpu,
-  ShoppingBag,
-  PackageCheck,
-  LayoutDashboard,
-  LogIn,
-  LogOut,
-  User as UserIcon,
-} from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import type { SessionUser } from "@/lib/types/domain";
 import { RoleBadge } from "./StatusBadge";
+import { useCart } from "./CartContext";
+import { CartDrawer } from "./CartDrawer";
 
 interface NavbarProps {
   user: SessionUser | null;
   onUserChange?: (user: SessionUser | null) => void;
+  onDataRefresh?: () => void;
 }
 
-export function Navbar({ user, onUserChange }: NavbarProps) {
+export function Navbar({ user, onUserChange, onDataRefresh }: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const { totalItems, activeOrder, setIsCartOpen } = useCart();
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
@@ -37,152 +33,151 @@ export function Navbar({ user, onUserChange }: NavbarProps) {
       user.role === "SUPPORT" ||
       user.role === "ADMIN");
 
-  return (
-    <header className="sticky top-0 z-40 bg-[#090B10]/90 backdrop-blur-md border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-7">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-lg bg-amber-500 text-[#090B10] flex items-center justify-center shadow-[0_0_20px_rgba(245,158,11,0.3)] group-hover:bg-amber-400 transition-all">
-              <Cpu className="w-5 h-5 stroke-[2.2]" />
-            </div>
-            <div>
-              <span className="font-display font-extrabold text-white tracking-tight text-base block leading-none">
-                STOCK<span className="text-amber-400">GUARD</span>
-              </span>
-              <span className="text-[10px] text-slate-400 font-mono tracking-widest uppercase">
-                PG-ACID // LOCK ENGINE
-              </span>
-            </div>
-          </Link>
+  const hasPendingPayment =
+    activeOrder && activeOrder.status === "PENDING_PAYMENT";
 
-          <nav className="hidden md:flex items-center gap-1.5">
-            <Link
-              href="/"
-              className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all ${
-                pathname === "/"
-                  ? "bg-amber-500 text-[#090B10] shadow-[0_0_15px_rgba(245,158,11,0.25)]"
-                  : "text-slate-300 hover:text-white hover:bg-white/5"
+  return (
+    <>
+      <header className="sticky top-0 z-40 bg-[#F7F7F5]/95 backdrop-blur border-b border-[#DDDCDA]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-8">
+            <Link href="/" className="flex items-baseline gap-2.5">
+              <span className="font-bold text-[#141517] tracking-tight text-lg">
+                StockGuard
+              </span>
+              <span className="text-xs text-[#52555A] hidden sm:inline">
+                Equipamiento de estudio
+              </span>
+            </Link>
+
+            <nav className="hidden md:flex items-center gap-6">
+              <Link
+                href="/"
+                className={`text-sm font-medium transition-colors py-1 border-b-2 ${
+                  pathname === "/" || pathname.startsWith("/product")
+                    ? "border-[#141517] text-[#141517]"
+                    : "border-transparent text-[#52555A] hover:text-[#141517]"
+                }`}
+              >
+                Catálogo
+              </Link>
+
+              <Link
+                href="/orders"
+                className={`text-sm font-medium transition-colors py-1 border-b-2 ${
+                  pathname.startsWith("/orders")
+                    ? "border-[#141517] text-[#141517]"
+                    : "border-transparent text-[#52555A] hover:text-[#141517]"
+                }`}
+              >
+                Mis pedidos
+              </Link>
+
+              {isStaff && (
+                <Link
+                  href="/admin"
+                  className={`text-sm font-medium transition-colors py-1 border-b-2 ${
+                    pathname.startsWith("/admin")
+                      ? "border-[#1D4ED8] text-[#1D4ED8]"
+                      : "border-transparent text-[#1D4ED8] hover:text-blue-900"
+                  }`}
+                >
+                  Panel de operaciones
+                </Link>
+              )}
+            </nav>
+          </div>
+
+          <div className="flex items-center gap-3">
+            {/* Persistent Session Cart / Active Reservation Trigger */}
+            <button
+              type="button"
+              onClick={() => setIsCartOpen(true)}
+              className={`inline-flex items-center gap-2 px-3 py-1.5 rounded text-xs font-medium border transition-colors cursor-pointer ${
+                hasPendingPayment
+                  ? "bg-amber-50 border-amber-400 text-amber-950"
+                  : totalItems > 0
+                  ? "bg-[#141517] border-[#141517] text-white"
+                  : "bg-white border-[#DDDCDA] text-[#141517] hover:bg-[#EBEAE4]"
               }`}
             >
               <ShoppingBag className="w-3.5 h-3.5" />
-              CATÁLOGO HARDWARE
-            </Link>
+              <span>Bolsa</span>
+              <span className="font-mono font-semibold">({totalItems})</span>
+              {hasPendingPayment && (
+                <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
+              )}
+            </button>
 
-            <Link
-              href="/orders"
-              className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all ${
-                pathname.startsWith("/orders")
-                  ? "bg-amber-500 text-[#090B10] shadow-[0_0_15px_rgba(245,158,11,0.25)]"
-                  : "text-slate-300 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              <PackageCheck className="w-3.5 h-3.5" />
-              MIS PEDIDOS
-            </Link>
-
-            {isStaff && (
-              <Link
-                href="/admin"
-                className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all ${
-                  pathname.startsWith("/admin")
-                    ? "bg-emerald-500 text-[#090B10] shadow-[0_0_15px_rgba(16,185,129,0.3)]"
-                    : "text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20"
-                }`}
-              >
-                <LayoutDashboard className="w-3.5 h-3.5" />
-                BACKOFFICE TERMINAL
-              </Link>
-            )}
-          </nav>
-        </div>
-
-        <div className="flex items-center gap-3">
-          {user ? (
-            <div className="flex items-center gap-2.5">
-              <div className="hidden sm:flex flex-col items-end">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold text-slate-200">
+            {user ? (
+              <div className="flex items-center gap-2.5">
+                <div className="hidden lg:flex items-center gap-2 text-xs">
+                  <span className="font-medium text-[#141517]">
                     {user.name}
                   </span>
                   <RoleBadge role={user.role} />
                 </div>
-                <span className="text-[11px] text-slate-400 font-mono">
-                  {user.email}
-                </span>
+                <Link
+                  href="/login"
+                  className="text-xs font-medium text-[#52555A] hover:text-[#141517] px-2.5 py-1.5 rounded border border-[#DDDCDA] bg-white transition-colors"
+                >
+                  Cuenta
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="px-2 py-1.5 rounded text-xs font-medium text-[#52555A] hover:text-[#141517] transition-colors cursor-pointer"
+                >
+                  Salir
+                </button>
               </div>
+            ) : (
               <Link
                 href="/login"
-                className="text-xs font-mono font-medium text-amber-300 hover:text-amber-200 px-2.5 py-1.5 rounded-md border border-amber-500/30 hover:border-amber-400/60 bg-amber-500/10 transition-colors"
-                title="Cambiar de cuenta o rol"
+                className="px-3.5 py-1.5 rounded text-xs font-medium bg-white border border-[#DDDCDA] text-[#141517] hover:bg-[#EBEAE4] transition-colors"
               >
-                CAMBIAR ROL
+                Iniciar sesión
               </Link>
-              <button
-                onClick={handleLogout}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-mono font-medium text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 transition-colors cursor-pointer"
-                title="Cerrar sesión"
-              >
-                <LogOut className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">SALIR</span>
-              </button>
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-mono font-bold tracking-wider uppercase bg-amber-500 text-[#090B10] hover:bg-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.25)] transition-all"
-            >
-              <LogIn className="w-3.5 h-3.5" />
-              ACCESO / ROLES RBAC
-            </Link>
-          )}
+            )}
+          </div>
         </div>
-      </div>
 
-      {/* Mobile bottom sub-bar */}
-      <div className="flex md:hidden border-t border-white/10 px-4 py-2 gap-2 overflow-x-auto bg-[#0D1017]">
-        <Link
-          href="/"
-          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-mono font-semibold ${
-            pathname === "/"
-              ? "bg-amber-500 text-[#090B10]"
-              : "text-slate-300 bg-white/5 border border-white/10"
-          }`}
-        >
-          <ShoppingBag className="w-3.5 h-3.5" />
-          Tienda
-        </Link>
-        <Link
-          href="/orders"
-          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-mono font-semibold ${
-            pathname.startsWith("/orders")
-              ? "bg-amber-500 text-[#090B10]"
-              : "text-slate-300 bg-white/5 border border-white/10"
-          }`}
-        >
-          <PackageCheck className="w-3.5 h-3.5" />
-          Pedidos
-        </Link>
-        {isStaff && (
+        {/* Mobile navigation */}
+        <div className="flex md:hidden border-t border-[#DDDCDA] px-4 py-2 gap-4 overflow-x-auto bg-white text-xs">
           <Link
-            href="/admin"
-            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-mono font-semibold ${
-              pathname.startsWith("/admin")
-                ? "bg-emerald-500 text-[#090B10]"
-                : "text-emerald-300 bg-emerald-500/10 border border-emerald-500/30"
+            href="/"
+            className={`font-medium ${
+              pathname === "/" || pathname.startsWith("/product")
+                ? "text-[#141517] underline underline-offset-4"
+                : "text-[#52555A]"
             }`}
           >
-            <LayoutDashboard className="w-3.5 h-3.5" />
-            Backoffice
+            Catálogo
           </Link>
-        )}
-        <Link
-          href="/login"
-          className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-mono font-semibold text-amber-300 bg-amber-500/10 border border-amber-500/30 ml-auto"
-        >
-          <UserIcon className="w-3.5 h-3.5" />
-          Roles
-        </Link>
-      </div>
-    </header>
+          <Link
+            href="/orders"
+            className={`font-medium ${
+              pathname.startsWith("/orders")
+                ? "text-[#141517] underline underline-offset-4"
+                : "text-[#52555A]"
+            }`}
+          >
+            Mis pedidos
+          </Link>
+          {isStaff && (
+            <Link
+              href="/admin"
+              className="font-medium text-[#1D4ED8]"
+            >
+              Operaciones
+            </Link>
+          )}
+          <Link href="/login" className="font-medium text-[#52555A] ml-auto">
+            Cuentas
+          </Link>
+        </div>
+      </header>
+
+      <CartDrawer user={user} onCheckoutSuccess={onDataRefresh} />
+    </>
   );
 }
