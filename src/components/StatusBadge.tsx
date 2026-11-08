@@ -6,59 +6,59 @@ export const ORDER_STATUS_CONFIG: Record<
   { label: string; badgeClass: string; dotClass: string }
 > = {
   PENDING_PAYMENT: {
-    label: "Reserva Activa (Pendiente Pago)",
-    badgeClass: "bg-amber-50 text-amber-800 border-amber-200",
-    dotClass: "bg-amber-500",
+    label: "RESERVA ACTIVA · PENDIENTE PAGO",
+    badgeClass: "bg-amber-500/15 text-amber-300 border-amber-500/40",
+    dotClass: "bg-amber-400 animate-pulse",
   },
   PAID: {
-    label: "Pagado (Listo p/ Picking)",
-    badgeClass: "bg-blue-50 text-blue-800 border-blue-200",
-    dotClass: "bg-blue-600",
+    label: "PAGADO · LISTO P/ PICKING",
+    badgeClass: "bg-sky-500/15 text-sky-300 border-sky-500/40",
+    dotClass: "bg-sky-400",
   },
   PROCESSING: {
-    label: "En Picking / Empaque",
-    badgeClass: "bg-indigo-50 text-indigo-800 border-indigo-200",
-    dotClass: "bg-indigo-600",
+    label: "EN PICKING / EMPAQUE",
+    badgeClass: "bg-cyan-500/15 text-cyan-300 border-cyan-500/40",
+    dotClass: "bg-cyan-400 animate-pulse",
   },
   SHIPPED: {
-    label: "Enviado (Stock Descontado)",
-    badgeClass: "bg-purple-50 text-purple-800 border-purple-200",
-    dotClass: "bg-purple-600",
+    label: "DESPACHADO · STOCK DESCONTADO",
+    badgeClass: "bg-emerald-500/15 text-emerald-300 border-emerald-500/40",
+    dotClass: "bg-emerald-400",
   },
   DELIVERED: {
-    label: "Entregado",
-    badgeClass: "bg-emerald-50 text-emerald-800 border-emerald-200",
-    dotClass: "bg-emerald-600",
+    label: "ENTREGADO",
+    badgeClass: "bg-emerald-500/20 text-emerald-200 border-emerald-400/50",
+    dotClass: "bg-emerald-300",
   },
   EXPIRED: {
-    label: "TTL Expirado (Stock Liberado)",
-    badgeClass: "bg-slate-100 text-slate-700 border-slate-300",
-    dotClass: "bg-slate-500",
+    label: "TTL EXPIRADO · STOCK LIBERADO",
+    badgeClass: "bg-zinc-800/90 text-zinc-400 border-zinc-700",
+    dotClass: "bg-zinc-500",
   },
   CANCELLED: {
-    label: "Cancelado (Stock Liberado)",
-    badgeClass: "bg-rose-50 text-rose-800 border-rose-200",
-    dotClass: "bg-rose-500",
+    label: "CANCELADO · STOCK LIBERADO",
+    badgeClass: "bg-rose-500/15 text-rose-300 border-rose-500/40",
+    dotClass: "bg-rose-400",
   },
   RETURN_REQUESTED: {
-    label: "Devolución Solicitada",
-    badgeClass: "bg-orange-50 text-orange-800 border-orange-200",
-    dotClass: "bg-orange-500",
+    label: "RMA · DEVOLUCIÓN SOLICITADA",
+    badgeClass: "bg-orange-500/15 text-orange-300 border-orange-500/40",
+    dotClass: "bg-orange-400 animate-pulse",
   },
   RETURNED: {
-    label: "Devuelto e Inspeccionado",
-    badgeClass: "bg-teal-50 text-teal-800 border-teal-200",
-    dotClass: "bg-teal-600",
+    label: "RMA · INSPECCIONADO EN BODEGA",
+    badgeClass: "bg-teal-500/15 text-teal-300 border-teal-500/40",
+    dotClass: "bg-teal-400",
   },
   REFUND_PENDING: {
-    label: "Reembolso Pendiente",
-    badgeClass: "bg-yellow-50 text-yellow-900 border-yellow-300",
-    dotClass: "bg-yellow-600",
+    label: "REEMBOLSO PENDIENTE",
+    badgeClass: "bg-yellow-500/15 text-yellow-200 border-yellow-500/40",
+    dotClass: "bg-yellow-400 animate-pulse",
   },
   REFUNDED: {
-    label: "Reembolsado",
-    badgeClass: "bg-zinc-100 text-zinc-800 border-zinc-300",
-    dotClass: "bg-zinc-600",
+    label: "REEMBOLSADO",
+    badgeClass: "bg-zinc-800 text-zinc-300 border-zinc-600",
+    dotClass: "bg-zinc-400",
   },
 };
 
@@ -67,24 +67,28 @@ export const ROLE_CONFIG: Record<
   { label: string; badgeClass: string; description: string }
 > = {
   CUSTOMER: {
-    label: "Cliente",
-    badgeClass: "bg-sky-50 text-sky-800 border-sky-200",
-    description: "Compra con reserva TTL, cancela antes de picking y solicita devoluciones",
+    label: "CLIENTE",
+    badgeClass: "bg-sky-500/15 text-sky-300 border-sky-500/40",
+    description:
+      "Compra con reserva TTL, cancela antes de picking y solicita devoluciones",
   },
   WAREHOUSE_OPERATOR: {
-    label: "Operador de Almacén",
-    badgeClass: "bg-amber-50 text-amber-900 border-amber-300",
-    description: "Picking/despacho, recepción de mercancía, ajustes con motivo e inspección de devoluciones",
+    label: "OPERADOR ALMACÉN",
+    badgeClass: "bg-amber-500/15 text-amber-300 border-amber-500/40",
+    description:
+      "Picking/despacho, recepción de mercancía, ajustes con motivo e inspección de devoluciones",
   },
   SUPPORT: {
-    label: "Soporte (CS)",
-    badgeClass: "bg-purple-50 text-purple-800 border-purple-200",
-    description: "Gestiona incidencias, aprueba reembolsos y cancelaciones asistidas (sin tocar stock físico)",
+    label: "SOPORTE CS",
+    badgeClass: "bg-rose-500/15 text-rose-300 border-rose-500/40",
+    description:
+      "Gestiona incidencias, aprueba reembolsos y cancelaciones asistidas (sin tocar stock físico)",
   },
   ADMIN: {
-    label: "Administrador",
-    badgeClass: "bg-emerald-50 text-emerald-900 border-emerald-300",
-    description: "Acceso total a catálogo, almacén, estados de pedidos, Kardex y usuarios",
+    label: "ADMINISTRADOR",
+    badgeClass: "bg-emerald-500/15 text-emerald-300 border-emerald-500/40",
+    description:
+      "Acceso total a catálogo, almacén, estados de pedidos, Kardex y usuarios",
   },
 };
 
@@ -93,48 +97,48 @@ export const MOVEMENT_TYPE_CONFIG: Record<
   { label: string; badgeClass: string }
 > = {
   RESTOCK: {
-    label: "RESTOCK (+Entrada)",
-    badgeClass: "bg-emerald-50 text-emerald-800 border-emerald-200",
+    label: "RESTOCK (+ENTRADA)",
+    badgeClass: "bg-emerald-500/15 text-emerald-300 border-emerald-500/40",
   },
   RESERVE: {
-    label: "RESERVE (Retención TTL)",
-    badgeClass: "bg-amber-50 text-amber-800 border-amber-200",
+    label: "RESERVE (RETENCIÓN TTL)",
+    badgeClass: "bg-amber-500/15 text-amber-300 border-amber-500/40",
   },
   RELEASE_EXPIRED: {
-    label: "RELEASE_EXPIRED (+Liberado TTL)",
-    badgeClass: "bg-slate-100 text-slate-700 border-slate-300",
+    label: "RELEASE_EXPIRED (+TTL VENCIDO)",
+    badgeClass: "bg-zinc-800 text-zinc-300 border-zinc-700",
   },
   RELEASE_CANCELLED: {
-    label: "RELEASE_CANCELLED (+Liberado Cancelación)",
-    badgeClass: "bg-sky-50 text-sky-800 border-sky-200",
+    label: "RELEASE_CANCELLED (+CANCELACIÓN)",
+    badgeClass: "bg-sky-500/15 text-sky-300 border-sky-500/40",
   },
   COMMIT_SALE: {
-    label: "COMMIT_SALE (-Salida Física Envío)",
-    badgeClass: "bg-indigo-50 text-indigo-800 border-indigo-200",
+    label: "COMMIT_SALE (-SALIDA DESPACHO)",
+    badgeClass: "bg-cyan-500/15 text-cyan-300 border-cyan-500/40",
   },
   RETURN_TO_AVAILABLE: {
-    label: "RETURN_TO_AVAILABLE (+Reingreso Apto)",
-    badgeClass: "bg-teal-50 text-teal-800 border-teal-200",
+    label: "RETURN_TO_AVAILABLE (+RMA APTO)",
+    badgeClass: "bg-teal-500/15 text-teal-300 border-teal-500/40",
   },
   RETURN_TO_DAMAGED: {
-    label: "RETURN_TO_DAMAGED (+Cuarentena/Dañado)",
-    badgeClass: "bg-rose-50 text-rose-800 border-rose-200",
+    label: "RETURN_TO_DAMAGED (+CUARENTENA)",
+    badgeClass: "bg-rose-500/15 text-rose-300 border-rose-500/40",
   },
   MANUAL_ADJUSTMENT: {
-    label: "MANUAL_ADJUSTMENT (Ajuste Auditado)",
-    badgeClass: "bg-purple-50 text-purple-800 border-purple-200",
+    label: "MANUAL_ADJUSTMENT (AUDITORÍA)",
+    badgeClass: "bg-orange-500/15 text-orange-300 border-orange-500/40",
   },
 };
 
 export function OrderStatusBadge({ status }: { status: OrderStatus }) {
   const cfg = ORDER_STATUS_CONFIG[status] ?? {
     label: status,
-    badgeClass: "bg-slate-100 text-slate-800 border-slate-200",
-    dotClass: "bg-slate-500",
+    badgeClass: "bg-zinc-800 text-zinc-300 border-zinc-700",
+    dotClass: "bg-zinc-400",
   };
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${cfg.badgeClass}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-semibold tracking-wider border ${cfg.badgeClass}`}
     >
       <span className={`w-1.5 h-1.5 rounded-full ${cfg.dotClass}`} />
       {cfg.label}
@@ -146,7 +150,7 @@ export function RoleBadge({ role }: { role: Role }) {
   const cfg = ROLE_CONFIG[role];
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold border ${cfg.badgeClass}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-widest border ${cfg.badgeClass}`}
     >
       {cfg.label}
     </span>
@@ -156,11 +160,11 @@ export function RoleBadge({ role }: { role: Role }) {
 export function MovementBadge({ type }: { type: MovementType }) {
   const cfg = MOVEMENT_TYPE_CONFIG[type] ?? {
     label: type,
-    badgeClass: "bg-slate-100 text-slate-700 border-slate-200",
+    badgeClass: "bg-zinc-800 text-zinc-300 border-zinc-700",
   };
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-medium border ${cfg.badgeClass}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-semibold border ${cfg.badgeClass}`}
     >
       {cfg.label}
     </span>
@@ -168,7 +172,7 @@ export function MovementBadge({ type }: { type: MovementType }) {
 }
 
 export function formatCurrency(cents: number): string {
-  return new Intl.NumberFormat("es-MX", {
+  return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   }).format(cents / 100);

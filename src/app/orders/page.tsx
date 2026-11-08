@@ -126,39 +126,39 @@ export default function CustomerOrdersPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col">
       <Navbar user={user} onUserChange={setUser} />
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-              <PackageCheck className="w-6 h-6 text-indigo-600" />
-              Mis Pedidos y Trazabilidad de Estados
+            <h1 className="font-display text-2xl font-extrabold text-white flex items-center gap-2.5">
+              <PackageCheck className="w-6 h-6 text-amber-400" />
+              MIS PEDIDOS &amp; TRAZABILIDAD DE ESTADOS
             </h1>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-400 mt-1">
               Consulta el estado en tiempo real, cancela antes de que Almacén
-              inicie el picking o solicita devoluciones.
+              inicie el picking o solicita devoluciones RMA.
             </p>
           </div>
 
           <button
             onClick={loadOrders}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-mono font-bold bg-[#11151F] border border-white/15 hover:border-amber-500/50 text-slate-200 cursor-pointer"
           >
-            <RefreshCw className="w-3.5 h-3.5" />
-            Actualizar
+            <RefreshCw className="w-3.5 h-3.5 text-amber-400" />
+            ACTUALIZAR
           </button>
         </div>
 
         {banner && (
           <div
-            className={`mb-6 p-4 rounded-xl border text-xs font-medium flex items-center justify-between ${
+            className={`mb-6 p-4 rounded-xl border text-xs font-mono font-medium flex items-center justify-between ${
               banner.type === "success"
-                ? "bg-emerald-50 border-emerald-200 text-emerald-900"
+                ? "bg-emerald-500/15 border-emerald-500/40 text-emerald-200"
                 : banner.type === "error"
-                ? "bg-rose-50 border-rose-200 text-rose-900"
-                : "bg-indigo-50 border-indigo-200 text-indigo-900"
+                ? "bg-rose-500/15 border-rose-500/40 text-rose-200"
+                : "bg-amber-500/15 border-amber-500/40 text-amber-200"
             }`}
           >
             <span>{banner.text}</span>
@@ -166,21 +166,21 @@ export default function CustomerOrdersPage() {
               onClick={() => setBanner(null)}
               className="font-bold ml-4 cursor-pointer"
             >
-              ✕
+              [X]
             </button>
           </div>
         )}
 
         {!user ? (
-          <div className="bg-white rounded-2xl border border-slate-200 p-10 text-center space-y-3">
-            <p className="text-sm font-semibold text-slate-800">
-              Inicia sesión para ver tus pedidos
+          <div className="bg-[#11151F] rounded-2xl border border-white/10 p-10 text-center space-y-3">
+            <p className="text-sm font-display font-bold text-white">
+              INICIA SESIÓN PARA VER TUS PEDIDOS
             </p>
             <Link
               href="/login"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 text-white text-xs font-semibold"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500 text-[#090B10] text-xs font-mono font-bold"
             >
-              Ir a Iniciar Sesión
+              IR A CONTROL DE ACCESO
             </Link>
           </div>
         ) : loading ? (
@@ -188,25 +188,25 @@ export default function CustomerOrdersPage() {
             {[1, 2].map((n) => (
               <div
                 key={n}
-                className="h-48 rounded-2xl bg-white border border-slate-200 animate-pulse"
+                className="h-48 rounded-2xl bg-[#11151F] border border-white/10 animate-pulse"
               />
             ))}
           </div>
         ) : orders.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center space-y-3">
-            <PackageCheck className="w-10 h-10 text-slate-300 mx-auto" />
-            <h3 className="text-base font-bold text-slate-800">
-              Aún no tienes pedidos registrados
+          <div className="bg-[#11151F] rounded-2xl border border-white/10 p-12 text-center space-y-3">
+            <PackageCheck className="w-10 h-10 text-slate-600 mx-auto" />
+            <h3 className="font-display text-base font-bold text-white">
+              SIN PEDIDOS REGISTRADOS
             </h3>
-            <p className="text-xs text-slate-500 max-w-md mx-auto">
-              Ve al catálogo de la tienda, agrega productos al carrito e inicia
-              el Checkout para crear una reserva con TTL en PostgreSQL.
+            <p className="text-xs text-slate-400 max-w-md mx-auto">
+              Ve al catálogo de hardware, selecciona un SKU e inicia el Checkout
+              para crear una reserva con TTL en PostgreSQL.
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-indigo-600 text-white text-xs font-semibold transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-[#090B10] text-xs font-mono font-bold transition-colors"
             >
-              Explorar Catálogo
+              EXPLORAR CATÁLOGO
             </Link>
           </div>
         ) : (
@@ -217,23 +217,23 @@ export default function CustomerOrdersPage() {
               return (
                 <div
                   key={order.id}
-                  className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden"
+                  className="bg-[#11151F] rounded-2xl border border-white/10 shadow-xl overflow-hidden animate-fade-up"
                 >
                   {/* Order Header */}
-                  <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
+                  <div className="px-6 py-4 bg-[#0B0E15] border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <span className="font-mono font-bold text-sm text-slate-900">
+                      <span className="font-mono font-bold text-sm text-amber-400">
                         {order.orderNumber}
                       </span>
                       <OrderStatusBadge status={order.status} />
                     </div>
 
-                    <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
                       <span>
-                        Creado: {new Date(order.createdAt).toLocaleString()}
+                        TIMESTAMP: {new Date(order.createdAt).toLocaleString()}
                       </span>
-                      <span className="font-bold text-sm text-slate-900">
-                        Total: {formatCurrency(order.totalCents)}
+                      <span className="font-bold text-sm text-white">
+                        TOTAL: {formatCurrency(order.totalCents)}
                       </span>
                     </div>
                   </div>
@@ -242,36 +242,36 @@ export default function CustomerOrdersPage() {
                   <div className="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
                     {/* Items & Customer Actions */}
                     <div className="lg:col-span-7 space-y-4">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                        Líneas del Pedido (SKUs)
+                      <h4 className="text-[11px] font-mono font-bold uppercase tracking-widest text-slate-400">
+                        LÍNEAS DEL PEDIDO (SKUs)
                       </h4>
-                      <div className="divide-y divide-slate-100 border border-slate-200 rounded-xl px-4 py-1">
+                      <div className="divide-y divide-white/10 border border-white/10 rounded-xl px-4 py-1 bg-[#0B0E15]">
                         {order.items.map((item) => (
                           <div
                             key={item.id}
                             className="py-2.5 flex items-center justify-between text-xs gap-2"
                           >
                             <div>
-                              <span className="font-semibold text-slate-900 block">
+                              <span className="font-semibold text-white block">
                                 {item.nameSnapshot}
                               </span>
-                              <span className="font-mono text-[11px] text-slate-500">
+                              <span className="font-mono text-[11px] text-amber-400">
                                 SKU: {item.skuSnapshot}
                               </span>
                               {(item.returnedToGood > 0 ||
                                 item.returnedToDamaged > 0) && (
-                                <div className="mt-1 flex items-center gap-2 text-[11px]">
-                                  <span className="text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded font-medium">
-                                    Reintegrado Apto: {item.returnedToGood}
+                                <div className="mt-1 flex items-center gap-2 text-[10px] font-mono">
+                                  <span className="text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.5 rounded">
+                                    REINTEGRADO APTO: {item.returnedToGood}
                                   </span>
-                                  <span className="text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded font-medium">
-                                    Cuarentena/Dañado: {item.returnedToDamaged}
+                                  <span className="text-rose-300 bg-rose-500/15 border border-rose-500/30 px-1.5 py-0.5 rounded">
+                                    CUARENTENA/DAÑADO: {item.returnedToDamaged}
                                   </span>
                                 </div>
                               )}
                             </div>
-                            <div className="text-right font-mono font-semibold text-slate-800">
-                              {item.quantity} x{" "}
+                            <div className="text-right font-mono font-semibold text-slate-200">
+                              {item.quantity} ×{" "}
                               {formatCurrency(item.unitPriceCents)}
                             </div>
                           </div>
@@ -279,8 +279,8 @@ export default function CustomerOrdersPage() {
                       </div>
 
                       {order.notes && (
-                        <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-start gap-2">
-                          <AlertTriangle className="w-4 h-4 shrink-0 text-amber-600 mt-0.5" />
+                        <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/40 text-amber-200 text-xs flex items-start gap-2">
+                          <AlertTriangle className="w-4 h-4 shrink-0 text-amber-400 mt-0.5" />
                           <span>{order.notes}</span>
                         </div>
                       )}
@@ -288,11 +288,11 @@ export default function CustomerOrdersPage() {
                       {/* Contextual Customer Controls based on State Machine */}
                       <div className="pt-2">
                         {order.status === "PENDING_PAYMENT" && (
-                          <div className="p-4 rounded-xl bg-indigo-50/60 border border-indigo-200 space-y-3">
-                            <div className="flex items-center justify-between text-xs">
-                              <span className="font-bold text-indigo-950 flex items-center gap-1.5">
-                                <Clock className="w-4 h-4 text-indigo-600" />
-                                Reserva activa hasta:{" "}
+                          <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-3">
+                            <div className="flex items-center justify-between text-xs font-mono">
+                              <span className="font-bold text-amber-300 flex items-center gap-1.5">
+                                <Clock className="w-4 h-4 text-amber-400" />
+                                RESERVA ACTIVA HASTA:{" "}
                                 {new Date(
                                   order.reservationExpiresAt
                                 ).toLocaleTimeString()}
@@ -308,10 +308,10 @@ export default function CustomerOrdersPage() {
                                     false
                                   )
                                 }
-                                className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                                className="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-[#090B10] text-xs font-mono font-bold flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                               >
                                 <CreditCard className="w-3.5 h-3.5" />
-                                Confirmar Pago Ahora
+                                CONFIRMAR PAGO AHORA
                               </button>
 
                               <button
@@ -323,9 +323,9 @@ export default function CustomerOrdersPage() {
                                     true
                                   )
                                 }
-                                className="px-3 py-1.5 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 text-xs font-semibold cursor-pointer disabled:opacity-50"
+                                className="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/40 text-xs font-mono font-semibold cursor-pointer disabled:opacity-50"
                               >
-                                Simular Expiración TTL + Pago Tardío
+                                SIMULAR EXPIRACIÓN TTL + PAGO TARDÍO
                               </button>
 
                               <button
@@ -337,27 +337,32 @@ export default function CustomerOrdersPage() {
                                     "Cancelado directamente por el cliente antes de pagar"
                                   )
                                 }
-                                className="px-3 py-1.5 rounded-lg bg-white hover:bg-rose-50 text-rose-700 border border-rose-200 text-xs font-semibold flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                                className="px-3 py-1.5 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/40 text-xs font-mono font-semibold flex items-center gap-1 cursor-pointer disabled:opacity-50"
                               >
                                 <XCircle className="w-3.5 h-3.5" />
-                                Cancelar y Liberar Stock
+                                CANCELAR Y LIBERAR STOCK
                               </button>
                             </div>
                           </div>
                         )}
 
                         {order.status === "PAID" && (
-                          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-between gap-3">
-                            <div className="text-xs text-slate-600">
-                              <span className="font-bold text-slate-900 block">
-                                ¿Deseas cancelar antes de que Almacén inicie el
+                          <div className="p-4 rounded-xl bg-[#0B0E15] border border-white/10 flex flex-wrap items-center justify-between gap-3">
+                            <div className="text-xs text-slate-400">
+                              <span className="font-bold text-white block">
+                                ¿Cancelar antes de que Almacén inicie el
                                 Picking?
                               </span>
                               Como el pedido sigue en{" "}
-                              <code className="font-mono">PAID</code> (pre-picking),
-                              puedes cancelarlo directamente; el stock volverá a{" "}
-                              <code className="font-mono">available</code> y
-                              pasará a reembolso.
+                              <code className="font-mono text-sky-400">
+                                PAID
+                              </code>{" "}
+                              (pre-picking), puedes cancelarlo; el stock volverá
+                              a{" "}
+                              <code className="font-mono text-emerald-400">
+                                available
+                              </code>{" "}
+                              y pasará a reembolso.
                             </div>
                             <button
                               disabled={isBusy}
@@ -368,27 +373,29 @@ export default function CustomerOrdersPage() {
                                   "Cancelación solicitada por el cliente en estado PAID (antes de entrar a PROCESSING)"
                                 )
                               }
-                              className="px-3.5 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                              className="px-3.5 py-2 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 text-xs font-mono font-bold flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                             >
                               <XCircle className="w-3.5 h-3.5" />
-                              Cancelar Pedido (Pre-Picking)
+                              CANCELAR PEDIDO (PRE-PICKING)
                             </button>
                           </div>
                         )}
 
                         {(order.status === "PROCESSING" ||
                           order.status === "SHIPPED") && (
-                          <div className="p-3.5 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-between gap-3 text-xs text-slate-600">
+                          <div className="p-3.5 rounded-xl bg-[#0B0E15] border border-white/10 flex items-center justify-between gap-3 text-xs text-slate-400">
                             <div className="flex items-center gap-2">
-                              <Lock className="w-4 h-4 text-slate-500 shrink-0" />
+                              <Lock className="w-4 h-4 text-amber-400 shrink-0" />
                               <span>
-                                <strong>Cancelación bloqueada:</strong> El
-                                operador de almacén ya inició el{" "}
+                                <strong className="text-white">
+                                  CANCELACIÓN BLOQUEADA:
+                                </strong>{" "}
+                                El operador de almacén ya inició el{" "}
                                 {order.status === "PROCESSING"
                                   ? "picking/empaque"
                                   : "despacho físico"}
                                 . Deberás esperar la entrega para solicitar una
-                                devolución.
+                                devolución RMA.
                               </span>
                             </div>
                             {order.status === "SHIPPED" && (
@@ -401,27 +408,31 @@ export default function CustomerOrdersPage() {
                                     "Recepción del paquete confirmada por el cliente"
                                   )
                                 }
-                                className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shrink-0 cursor-pointer"
+                                className="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-[#090B10] text-xs font-mono font-bold shrink-0 cursor-pointer"
                               >
                                 <CheckCircle2 className="w-3.5 h-3.5 inline mr-1" />
-                                Confirmar Paquete Recibido
+                                CONFIRMAR RECEPCIÓN
                               </button>
                             )}
                           </div>
                         )}
 
                         {order.status === "DELIVERED" && (
-                          <div className="p-4 rounded-xl bg-orange-50/70 border border-orange-200 flex flex-wrap items-center justify-between gap-3">
-                            <div className="text-xs text-orange-950">
-                              <span className="font-bold block">
-                                Pedido Entregado — ¿Necesitas devolver un
-                                artículo?
+                          <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/30 flex flex-wrap items-center justify-between gap-3">
+                            <div className="text-xs text-orange-200">
+                              <span className="font-bold text-white block">
+                                PEDIDO ENTREGADO — ¿SOLICITAR DEVOLUCIÓN RMA?
                               </span>
-                              Al solicitar la devolución, el Operador de Almacén
-                              recibirá e inspeccionará el producto para decidir
-                              si vuelve a{" "}
-                              <code className="font-mono">available</code> o{" "}
-                              <code className="font-mono">damaged</code>.
+                              El Operador de Almacén recibirá e inspeccionará el
+                              producto físicamente para decidir si vuelve a{" "}
+                              <code className="font-mono text-emerald-300">
+                                available
+                              </code>{" "}
+                              o{" "}
+                              <code className="font-mono text-rose-300">
+                                damaged
+                              </code>
+                              .
                             </div>
                             <button
                               disabled={isBusy}
@@ -432,10 +443,10 @@ export default function CustomerOrdersPage() {
                                   "Cliente solicita devolución post-entrega para inspección en almacén"
                                 )
                               }
-                              className="px-3.5 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                              className="px-3.5 py-2 rounded-lg bg-orange-500 hover:bg-orange-400 text-[#090B10] text-xs font-mono font-bold flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                             >
                               <RotateCcw className="w-3.5 h-3.5" />
-                              Solicitar Devolución (RMA)
+                              SOLICITAR DEVOLUCIÓN (RMA)
                             </button>
                           </div>
                         )}
@@ -443,27 +454,27 @@ export default function CustomerOrdersPage() {
                     </div>
 
                     {/* Right Column: Order State Audit Log */}
-                    <div className="lg:col-span-5 bg-slate-50 rounded-xl border border-slate-200 p-4">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5 mb-3">
-                        <History className="w-3.5 h-3.5 text-indigo-600" />
-                        Historial de Transiciones (Audit Log)
+                    <div className="lg:col-span-5 bg-[#0B0E15] rounded-xl border border-white/10 p-4">
+                      <h4 className="text-[11px] font-mono font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5 mb-3">
+                        <History className="w-3.5 h-3.5 text-amber-400" />
+                        ORDER STATE AUDIT LOG
                       </h4>
 
-                      <ol className="relative border-l border-slate-300 ml-2 space-y-3">
+                      <ol className="relative border-l border-white/15 ml-2 space-y-3">
                         {order.stateHistory.map((h) => (
                           <li key={h.id} className="ml-4">
-                            <div className="absolute w-2.5 h-2.5 bg-indigo-600 rounded-full -left-[5.5px] mt-1 border border-white" />
-                            <div className="text-[11px] font-mono font-bold text-slate-800">
+                            <div className="absolute w-2.5 h-2.5 bg-amber-400 rounded-full -left-[5.5px] mt-1 border border-[#090B10]" />
+                            <div className="text-[11px] font-mono font-bold text-slate-300">
                               {h.fromStatus ? `${h.fromStatus} → ` : ""}
-                              <span className="text-indigo-700">
+                              <span className="text-amber-400">
                                 {h.toStatus}
                               </span>
                             </div>
-                            <p className="text-xs text-slate-600 mt-0.5">
+                            <p className="text-xs text-slate-400 mt-0.5">
                               {h.reason}
                             </p>
-                            <span className="text-[10px] text-slate-400 block mt-0.5">
-                              Rol: {h.actorRole} •{" "}
+                            <span className="text-[10px] font-mono text-slate-500 block mt-0.5">
+                              ACTOR: {h.actorRole} •{" "}
                               {new Date(h.createdAt).toLocaleTimeString()}
                             </span>
                           </li>
