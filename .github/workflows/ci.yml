@@ -2,9 +2,9 @@ name: CI — Concurrency Tests & Production Build
 
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, dev, preview, staging, "test/**", "feat/**"]
   pull_request:
-    branches: [main, master]
+    branches: [main, master, dev]
 
 jobs:
   verify:
